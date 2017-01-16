@@ -1,30 +1,27 @@
-// Copyright (c) 2017, sdhillon. All rights reserved. Use of this source code
-// is governed by a BSD-style license that can be found in the LICENSE file.
-
 import 'package:angular2/core.dart';
-import 'package:angular2_components/angular2_components.dart';
+import 'package:angular2/platform/common.dart';
+import 'package:ringoftrust_web/dashboard_component.dart';
+import 'package:ringoftrust_web/hero_detail_component.dart';
+import 'package:ringoftrust_web/hero_service.dart';
+import 'package:ringoftrust_web/heroes_component.dart';
+import 'package:angular2/router.dart';
 
-import 'package:ringoftrust_web/hello_dialog/hello_dialog.dart';
-
+@RouteConfig(const [
+  const Route(path: '#/dashboard', name: 'Dashboard', component: DashboardComponent, useAsDefault: true),
+  const Route(path: '#/heroes', name: 'Heroes', component: HeroesComponent),
+  const Route(path: '#/detail/:id', name: 'HeroDetail', component: HeroDetailComponent)
+])
 @Component(
   selector: 'my-app',
-  styleUrls: const ['app_component.css'],
   templateUrl: 'app_component.html',
-  directives: const [materialDirectives, HelloDialog],
-  providers: const [materialProviders],
+  directives: const [ROUTER_DIRECTIVES],
+  providers: const [HeroService],
+  styleUrls: const ['app_component.css']
+
 )
 class AppComponent {
-  // Nothing here yet. All logic is in HelloDialog.
-  List<String> heroes = buildNames().toList();
-}
+  final String title = 'Tour of Heroes';
+  final HeroService _heroService;
+  AppComponent(this._heroService);
 
-Iterable<String> buildNames() sync* {
-  var prefixes = ["Super", "Mega", "Ultra"];
-  var suffixes = ["man", "woman", "boy", "girl"];
-
-  for (var prefix in prefixes) {
-    for (var suffix in suffixes) {
-      yield "$prefix$suffix";
-    }
-  }
 }
